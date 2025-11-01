@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz des Verbes Forts Allemands</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="app-container">
+        <h1>Quiz des Verbes Forts</h1>
+        <p>Complétez les formes du verbe suivant (3e personne du singulier).</p>
+
+        <div id="quiz-question">
+            <h2 id="verb-infinitive"></h2>
+            <p id="verb-translation"></p>
+        </div>
+
+        <form id="quiz-form">
+            <div class="form-group">
+                <label for="praesens-input">Präsens (er/sie/es...)</label>
+                <input type="text" id="praesens-input" autocomplete="off">
+                <span class="feedback" id="praesens-feedback"></span>
+            </div>
+            <div class="form-group">
+                <label for="praeteritum-input">Präteritum (er/sie/es...)</label>
+                <input type="text" id="praeteritum-input" autocomplete="off">
+                <span class="feedback" id="praeteritum-feedback"></span>
+            </div>
+            <div class="form-group">
+                <label for="perfekt-input">Perfekt (er/sie/es...)</label>
+                <input type="text" id="perfekt-input" autocomplete="off">
+                <span class="feedback" id="perfekt-feedback"></span>
+            </div>
+
+            <div id="controls">
+                <button type="submit" id="check-button">Vérifier</button>
+                <button type="button" id="next-button" style="display: none;">Verbe Suivant</button>
+            </div>
+        </form>
+
+        <div id="answer-container" style="display: none;">
+            <h3>Réponse Correcte :</h3>
+            <p><strong>Präsens:</strong> <span id="answer-praesens"></span></p>
+            <p><strong>Präteritum:</strong> <span id="answer-praeteritum"></span></p>
+            <p><strong>Perfekt:</strong> <span id="answer-perfekt"></span></p>
+        </div>
+    </div>
+
+    <script src="verben.js"></script>
+    <script src="app.js" defer></script>
+</body>
+</html>
