@@ -2,14 +2,15 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // Éléments du DOM
-    const infinitiveEl = document.getElementById('verb-infinitive');
     const translationEl = document.getElementById('verb-translation');
     
-    const praesensInput = document.getElementById('praesens-input');
+    const infinitiveInput = document.getElementById('infinitive-input');
+    const praesensInput = document.getElementById('praesens-input'); // AJOUTÉ
     const praeteritumInput = document.getElementById('praeteritum-input');
     const perfektInput = document.getElementById('perfekt-input');
     
-    const praesensFeedback = document.getElementById('praesens-feedback');
+    const infinitiveFeedback = document.getElementById('infinitive-feedback');
+    const praesensFeedback = document.getElementById('praesens-feedback'); // AJOUTÉ
     const praeteritumFeedback = document.getElementById('praeteritum-feedback');
     const perfektFeedback = document.getElementById('perfekt-feedback');
 
@@ -18,73 +19,79 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizForm = document.getElementById('quiz-form');
     
     const answerContainer = document.getElementById('answer-container');
+    const answerInfinitive = document.getElementById('answer-infinitive');
     const answerPraesens = document.getElementById('answer-praesens');
     const answerPraeteritum = document.getElementById('answer-praeteritum');
     const answerPerfekt = document.getElementById('answer-perfekt');
 
     let currentVerb = null;
-    let verbList = [...VERBS]; // Crée une copie de la liste pour la mélanger
+    let verbList = [...VERBS];
 
-    // Fonction pour normaliser une chaîne (ignorer la casse, les espaces)
     function normalize(str) {
         return str.toLowerCase().trim().replace(/\s+/g, ' ');
     }
 
-    // Fonction pour vérifier une réponse qui peut avoir des alternatives (ex: "hat/ist")
     function checkAnswer(userInput, correctAnswers) {
         const userNorm = normalize(userInput);
         const options = correctAnswers.split('/').map(opt => normalize(opt));
         return options.includes(userNorm);
     }
 
-    // Fonction pour charger un nouveau verbe
+    // Fonction pour charger un nouveau verbe (modifiée)
     function loadNextVerb() {
-        // Cacher les réponses, réinitialiser les champs
         answerContainer.style.display = 'none';
         checkButton.style.display = 'block';
         nextButton.style.display = 'none';
         
-        praesensInput.value = '';
+        infinitiveInput.value = '';
+        praesensInput.value = ''; // AJOUTÉ
         praeteritumInput.value = '';
         perfektInput.value = '';
         
-        praesensInput.disabled = false;
+        infinitiveInput.disabled = false;
+        praesensInput.disabled = false; // AJOUTÉ
         praeteritumInput.disabled = false;
         perfektInput.disabled = false;
 
-        praesensFeedback.textContent = '';
+        infinitiveFeedback.textContent = '';
+        praesensFeedback.textContent = ''; // AJOUTÉ
         praeteritumFeedback.textContent = '';
         perfektFeedback.textContent = '';
         
-        praesensInput.classList.remove('correct-border', 'incorrect-border');
+        infinitiveInput.classList.remove('correct-border', 'incorrect-border');
+        praesensInput.classList.remove('correct-border', 'incorrect-border'); // AJOUTÉ
         praeteritumInput.classList.remove('correct-border', 'incorrect-border');
         perfektInput.classList.remove('correct-border', 'incorrect-border');
 
-        // Choisir un verbe au hasard
         const randomIndex = Math.floor(Math.random() * verbList.length);
         currentVerb = verbList[randomIndex];
         
-        // Afficher la question
-        infinitiveEl.textContent = currentVerb.infinitive;
         translationEl.textContent = currentVerb.translation;
     }
 
-    // Fonction pour vérifier les réponses de l'utilisateur
+    // Fonction pour vérifier les réponses (modifiée)
     function handleCheck(event) {
-        event.preventDefault(); // Empêche le formulaire de recharger la page
+        event.preventDefault();
         if (!currentVerb) return;
 
         // Récupérer les entrées
-        const praesensUser = praesensInput.value;
+        const infinitiveUser = infinitiveInput.value;
+        const praesensUser = praesensInput.value; // AJOUTÉ
         const praeteritumUser = praeteritumInput.value;
         const perfektUser = perfektInput.value;
 
         // Vérifier chaque champ
-        const isPraesensCorrect = checkAnswer(praesensUser, currentVerb.praesens);
+        const isInfinitiveCorrect = checkAnswer(infinitiveUser, currentVerb.infinitive);
+        const isPraesensCorrect = checkAnswer(praesensUser, currentVerb.praesens); // AJOUTÉ
         const isPraeteritumCorrect = checkAnswer(praeteritumUser, currentVerb.praeteritum);
         const isPerfektCorrect = checkAnswer(perfektUser, currentVerb.perfekt);
         
-        // Afficher feedback pour Präsens
+        // Afficher feedback pour Infinitif
+        infinitiveFeedback.textContent = isInfinitiveCorrect ? 'Correct !' : 'Incorrect';
+        infinitiveFeedback.className = isInfinitiveCorrect ? 'feedback correct' : 'feedback incorrect';
+        infinitiveInput.classList.add(isInfinitiveCorrect ? 'correct-border' : 'incorrect-border');
+
+        // Afficher feedback pour Präsens (AJOUTÉ)
         praesensFeedback.textContent = isPraesensCorrect ? 'Correct !' : 'Incorrect';
         praesensFeedback.className = isPraesensCorrect ? 'feedback correct' : 'feedback incorrect';
         praesensInput.classList.add(isPraesensCorrect ? 'correct-border' : 'incorrect-border');
@@ -100,25 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
         perfektInput.classList.add(isPerfektCorrect ? 'correct-border' : 'incorrect-border');
         
         // Désactiver les champs
-        praesensInput.disabled = true;
+        infinitiveInput.disabled = true;
+        praesensInput.disabled = true; // AJOUTÉ
         praeteritumInput.disabled = true;
         perfektInput.disabled = true;
 
         // Afficher la réponse correcte
+        answerInfinitive.textContent = currentVerb.infinitive;
         answerPraesens.textContent = currentVerb.praesens;
         answerPraeteritum.textContent = currentVerb.praeteritum;
         answerPerfekt.textContent = currentVerb.perfekt;
         answerContainer.style.display = 'block';
 
-        // Changer les boutons
         checkButton.style.display = 'none';
         nextButton.style.display = 'block';
     }
 
-    // Écouteurs d'événements
     quizForm.addEventListener('submit', handleCheck);
     nextButton.addEventListener('click', loadNextVerb);
 
-    // Charger le premier verbe au démarrage
     loadNextVerb();
 });

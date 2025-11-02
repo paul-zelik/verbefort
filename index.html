@@ -10,19 +10,25 @@
 
     <div id="app-container">
         <h1>Quiz des Verbes Forts</h1>
-        <p>Complétez les formes du verbe suivant (3e personne du singulier).</p>
+        <p>Trouvez le verbe allemand et ses formes (3e pers. singulier).</p>
 
         <div id="quiz-question">
-            <h2 id="verb-infinitive"></h2>
-            <p id="verb-translation"></p>
+            <h2 id="verb-translation"></h2>
         </div>
 
         <form id="quiz-form">
+            <div class="form-group">
+                <label for="infinitive-input">Infinitif</label>
+                <input type="text" id="infinitive-input" autocomplete="off">
+                <span class="feedback" id="infinitive-feedback"></span>
+            </div>
+
             <div class="form-group">
                 <label for="praesens-input">Präsens (er/sie/es...)</label>
                 <input type="text" id="praesens-input" autocomplete="off">
                 <span class="feedback" id="praesens-feedback"></span>
             </div>
+
             <div class="form-group">
                 <label for="praeteritum-input">Präteritum (er/sie/es...)</label>
                 <input type="text" id="praeteritum-input" autocomplete="off">
@@ -42,6 +48,7 @@
 
         <div id="answer-container" style="display: none;">
             <h3>Réponse Correcte :</h3>
+            <p><strong>Infinitif:</strong> <span id="answer-infinitive"></span></p>
             <p><strong>Präsens:</strong> <span id="answer-praesens"></span></p>
             <p><strong>Präteritum:</strong> <span id="answer-praeteritum"></span></p>
             <p><strong>Perfekt:</strong> <span id="answer-perfekt"></span></p>
