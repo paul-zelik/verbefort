@@ -25,6 +25,7 @@ nav {
     display: flex;
     justify-content: center;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 .nav-button {
@@ -79,6 +80,7 @@ main {
     max-width: 600px;
     border: 1px solid #e0e0e0;
     margin: 0 auto; /* Centrer le conteneur */
+    box-sizing: border-box;
 }
 
 .app-container h2 {
@@ -145,7 +147,6 @@ button:disabled {
 }
 .feedback.correct { color: #27ae60; }
 .feedback.incorrect { color: #e74c3c; }
-/* AJOUT : Feedback orange */
 .feedback.warning { color: #f39c12; }
 
 
@@ -157,7 +158,6 @@ input.incorrect-border {
     border-color: #e74c3c;
     background-color: #fff6f6;
 }
-/* AJOUT : Bordure orange */
 input.warning-border {
     border-color: #f39c12;
     background-color: #fffaf0;
@@ -232,7 +232,7 @@ input.warning-border {
 .qcm-choice.correct { background-color: #eaf8f0; border-color: #27ae60; }
 .qcm-choice.incorrect { background-color: #fff6f6; border-color: #e74c3c; }
 
-/* MODIFIÉ : Styles pour les zones de saisie */
+/* Styles pour les zones de saisie */
 #vocab-input-area, #vocab-noun-input-area {
     display: flex;
     gap: 10px;

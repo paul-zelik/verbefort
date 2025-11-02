@@ -1,6 +1,7 @@
 // main.js
 
 document.addEventListener('DOMContentLoaded', () => {
+    // navButtons inclura automatiquement le nouveau bouton "Mélange"
     const navButtons = document.querySelectorAll('.nav-button');
     const exercisePages = document.querySelectorAll('.exercise-page');
 
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             page.classList.remove('active');
         });
 
-        // Désactiver tous les boutons
+        // Désactiver tous les boutons (y compris "Mélange")
         navButtons.forEach(btn => {
             btn.classList.remove('active');
         });
@@ -28,7 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
             pageToShow.classList.add('active');
         }
 
-        // Activer le bouton de navigation correspondant
+        // Activer le bouton de navigation correspondant au jeu lancé
+        // ex: si pageId est 'vocab-exercise', il activera 'nav-vocab'
         const buttonToActivate = document.querySelector(`#nav-${pageId.split('-')[0]}`);
         if (buttonToActivate) {
             buttonToActivate.classList.add('active');
@@ -63,6 +65,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('nav-strong-verbs').addEventListener('click', () => {
         showExercise('strong-verb-exercise');
     });
+
+    // ***** NOUVELLE SECTION AJOUTÉE *****
+    document.getElementById('nav-mixed').addEventListener('click', () => {
+        // 1. Définir la liste des jeux possibles
+        const games = ['vocab-exercise', 'conjug-exercise', 'strong-verb-exercise'];
+        
+        // 2. Choisir un jeu au hasard
+        const randomGameId = games[Math.floor(Math.random() * games.length)];
+        
+        // 3. Lancer cet exercice
+        // La fonction showExercise s'occupera d'activer le bon onglet (1, 2 ou 3)
+        showExercise(randomGameId);
+    });
+    // ***********************************
 
     // Afficher le premier jeu par défaut (Vocabulaire)
     showExercise('vocab-exercise');

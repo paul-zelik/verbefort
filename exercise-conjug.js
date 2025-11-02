@@ -1,7 +1,7 @@
 // exercise-conjug.js
 
 function initConjug() {
-    // --- SÉLECTEURS DOM (inchangés) ---
+    // --- SÉLECTEURS DOM ---
     const verbEl = document.getElementById('conjug-verb');
     const tenseEl = document.getElementById('conjug-tense');
     const inputEl = document.getElementById('conjug-input');
@@ -12,13 +12,13 @@ function initConjug() {
     const answerContainer = document.getElementById('conjug-answer-container');
     const answerEl = document.getElementById('conjug-answer');
 
-    // --- LOGIQUE DU JEU (Modifiée) ---
-    let sessionList = [...STRONG_VERBS]; // Liste des nouvelles questions
-    let retryList = []; // Notre nouvelle liste de rattrapage
-    let currentQuestionData = {}; // Stocke {verb, tense, answer}
-    let wasRetryQuestion = false; // Pour savoir si la question vient de la retryList
+    // --- LOGIQUE DU JEU ---
+    let sessionList = [...STRONG_VERBS]; 
+    let retryList = []; 
+    let currentQuestionData = {}; 
+    let wasRetryQuestion = false; 
 
-    // --- FONCTIONS (inchangées) ---
+    // --- FONCTIONS ---
     function normalize(str) {
         return str.toLowerCase().trim().replace(/\s+/g, ' ');
     }
@@ -28,9 +28,9 @@ function initConjug() {
         return options.includes(userNorm);
     }
 
-    // --- CHARGEMENT DE QUESTION (Modifié) ---
+    // --- CHARGEMENT DE QUESTION ---
     function loadQuestion() {
-        // 1. Réinitialiser l'interface (inchangé)
+        // 1. Réinitialiser l'interface
         inputEl.value = '';
         inputEl.disabled = false;
         inputEl.classList.remove('correct-border', 'incorrect-border');
@@ -39,19 +39,17 @@ function initConjug() {
         nextButton.style.display = 'none';
         answerContainer.style.display = 'none';
 
-        // 2. Choisir une question (LOGIQUE MODIFIÉE)
+        // 2. Choisir une question
         wasRetryQuestion = false;
         if (retryList.length > 0 && Math.random() < 0.4) {
-            // Piocher dans la liste de rattrapage
             currentQuestionData = retryList.shift();
             wasRetryQuestion = true;
         } else {
-            // Créer une nouvelle question
             if (sessionList.length === 0) {
-                sessionList = [...STRONG_VERBS]; // Recharger la liste
+                sessionList = [...STRONG_VERBS]; 
             }
             const randomIndex = Math.floor(Math.random() * sessionList.length);
-            const verb = sessionList.splice(randomIndex, 1)[0]; // Retirer de la sessionList
+            const verb = sessionList.splice(randomIndex, 1)[0]; 
             
             const tense = (Math.random() > 0.5) ? "Präsens" : "Präteritum";
             const answer = (tense === "Präsens") ? verb.praesens : verb.praeteritum;
@@ -59,12 +57,12 @@ function initConjug() {
             currentQuestionData = { verb, tense, answer };
         }
         
-        // 3. Mettre à jour l'interface (inchangé)
+        // 3. Mettre à jour l'interface
         verbEl.textContent = currentQuestionData.verb.infinitive;
         tenseEl.textContent = currentQuestionData.tense;
     }
 
-    // --- VÉRIFICATION (Modifiée) ---
+    // --- VÉRIFICATION ---
     function handleCheck(e) {
         e.preventDefault();
         inputEl.disabled = true;
@@ -79,8 +77,6 @@ function initConjug() {
             feedbackEl.textContent = "Correct !";
             feedbackEl.className = 'feedback correct';
             inputEl.classList.add('correct-border');
-            // C'était une question de rattrapage et c'est correct
-            // Elle est déjà retirée de la liste (par .shift()), donc on ne fait rien.
         } else {
             feedbackEl.textContent = "Incorrect.";
             feedbackEl.className = 'feedback incorrect';
@@ -89,7 +85,6 @@ function initConjug() {
             answerEl.textContent = correctAnswer;
             answerContainer.style.display = 'block';
             
-            // AJOUTÉ : Remettre la question dans la liste de rattrapage
             retryList.push(currentQuestionData);
         }
     }

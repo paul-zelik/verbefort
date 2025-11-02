@@ -14,10 +14,12 @@
             <button id="nav-vocab" class="nav-button">Vocabulaire (Ex 1)</button>
             <button id="nav-conjug" class="nav-button">Conjugaison (Ex 2)</button>
             <button id="nav-strong-verbs" class="nav-button">Verbes Forts (Ex 3)</button>
+            <button id="nav-mixed" class="nav-button">Mélange (Ex 4)</button>
         </nav>
     </header>
 
     <main>
+        <!-- Page de l'Exercice 1 : Vocabulaire -->
         <div id="vocab-exercise" class="exercise-page">
             <h2>Exercice 1 : Vocabulaire</h2>
             <div class="app-container" id="vocab-app-container">
@@ -46,6 +48,7 @@
                 <div id="vocab-quiz-area" style="display: none;">
                     <div id="vocab-question"></div>
                     
+                    <!-- Mode QCM (DE -> FR) -->
                     <div id="vocab-qcm-choices">
                         <button class="qcm-choice"></button>
                         <button class="qcm-choice"></button>
@@ -53,15 +56,18 @@
                         <button class="qcm-choice"></button>
                     </div>
 
+                    <!-- Mode Saisie (FR -> DE) - Verbes, Adj, etc. -->
                     <div id="vocab-input-area" style="display: none;">
                         <input type="text" id="vocab-input" autocomplete="off">
                     </div>
 
+                    <!-- Mode Saisie (FR -> DE) - Noms (avec déterminant) -->
                     <div id="vocab-noun-input-area" style="display: none;">
                         <input type="text" id="vocab-determiner-input" placeholder="Der/Die/Das" autocomplete="off">
                         <input type="text" id="vocab-noun-input" placeholder="Nomen" autocomplete="off">
                     </div>
                     
+                    <!-- Boutons et feedback partagés -->
                     <button id="vocab-check-button" style="display: none;">Vérifier</button>
                     <div id="vocab-feedback"></div>
                     <button id="vocab-next-button" style="display: none;">Suivant</button>
@@ -69,6 +75,7 @@
             </div>
         </div>
 
+        <!-- Page de l'Exercice 2 : Conjugaison -->
         <div id="conjug-exercise" class="exercise-page">
             <h2>Exercice 2 : Conjugaison Simple</h2>
             <div class="app-container" id="conjug-app-container">
@@ -97,6 +104,7 @@
             </div>
         </div>
 
+        <!-- Page de l'Exercice 3 : Verbes Forts -->
         <div id="strong-verb-exercise" class="exercise-page">
             <div class="app-container" id="strong-verb-app-container">
                 <h2>Exercice 3 : Déclinaisons des Verbes Forts</h2>
@@ -144,13 +152,15 @@
         </div>
     </main>
 
+    <!-- Fichiers de Données -->
     <script src="data-strong-verbs.js"></script>
     <script src="data-vocab.js"></script>
 
+    <!-- Fichiers de Logique -->
     <script src="main.js"></script>
     <script src="exercise-strong-verbs.js"></script>
-    <script src="exercise-vocab.js"></script>
-    <script src="exercise-conjug.js"></script>
+    <script src="exercise-vocab.js"></script> 
+    <script src="exercise-conjug.js"></script> 
 
 </body>
 </html>

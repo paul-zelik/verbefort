@@ -1,7 +1,7 @@
 // exercise-strong-verbs.js
 
 function initStrongVerbs() {
-    // --- SÉLECTEURS DOM (inchangés) ---
+    // --- SÉLECTEURS DOM ---
     const exerciseContainer = document.getElementById('strong-verb-exercise');
     if (!exerciseContainer) return; 
     const translationEl = exerciseContainer.querySelector('#verb-translation');
@@ -22,13 +22,13 @@ function initStrongVerbs() {
     const answerPraeteritum = exerciseContainer.querySelector('#answer-praeteritum');
     const answerPerfekt = exerciseContainer.querySelector('#answer-perfekt');
 
-    // --- LOGIQUE DU JEU (inchangée) ---
+    // --- LOGIQUE DU JEU ---
     let sessionList = [...STRONG_VERBS]; 
     let retryList = []; 
     let currentVerb = null;
     let wasRetryQuestion = false; 
 
-    // --- FONCTIONS (inchangées) ---
+    // --- FONCTIONS ---
     function normalize(str) {
         return str.toLowerCase().trim().replace(/\s+/g, ' ');
     }
@@ -38,7 +38,7 @@ function initStrongVerbs() {
         return options.includes(userNorm);
     }
 
-    // --- CHARGEMENT DE VERBE (inchangé) ---
+    // --- CHARGEMENT DE VERBE ---
     function loadNextVerb() {
         // 1. Réinitialiser l'interface 
         answerContainer.style.display = 'none';
@@ -75,12 +75,12 @@ function initStrongVerbs() {
         translationEl.textContent = currentVerb.translation;
     }
 
-    // --- VÉRIFICATION (Corrigé) ---
+    // --- VÉRIFICATION ---
     function handleCheck(event) {
         event.preventDefault();
         if (!currentVerb) return;
 
-        // 1. Vérifier les réponses (inchangé)
+        // 1. Vérifier les réponses
         const infinitiveUser = infinitiveInput.value;
         const praesensUser = praesensInput.value;
         const praeteritumUser = praeteritumInput.value;
@@ -93,7 +93,7 @@ function initStrongVerbs() {
         
         const isFullyCorrect = isInfinitiveCorrect && isPraesensCorrect && isPraeteritumCorrect && isPerfektCorrect;
 
-        // 2. Donner le feedback (inchangé)
+        // 2. Donner le feedback
         infinitiveFeedback.textContent = isInfinitiveCorrect ? 'Correct !' : 'Incorrect';
         infinitiveFeedback.className = isInfinitiveCorrect ? 'feedback correct' : 'feedback incorrect';
         infinitiveInput.classList.add(isInfinitiveCorrect ? 'correct-border' : 'incorrect-border');
@@ -118,15 +118,12 @@ function initStrongVerbs() {
             // Correct.
         } else {
             // Incorrect.
-            retryList.push(currentVerb); // On l'ajoute à la liste de rattrapage
+            retryList.push(currentVerb); 
             
             // Afficher la réponse correcte si erreur
             answerInfinitive.textContent = currentVerb.infinitive;
             answerPraesens.textContent = currentVerb.praesens;
-            
-            // ***** C'EST CETTE LIGNE QUI EST CORRIGÉE *****
-            answerPraeteritum.textContent = currentVerb.praeteritum; // (il manquait le 'e')
-            
+            answerPraeteritum.textContent = currentVerb.praeteritum; 
             answerPerfekt.textContent = currentVerb.perfekt;
             answerContainer.style.display = 'block';
         }

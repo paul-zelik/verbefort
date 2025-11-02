@@ -1,7 +1,7 @@
 // exercise-vocab.js
 
 function initVocab() {
-    // --- SÉLECTEURS DOM (inchangés) ---
+    // --- SÉLECTEURS DOM ---
     const filter = document.getElementById('vocab-type-filter');
     const modeSelect = document.getElementById('vocab-mode');
     const startButton = document.getElementById('vocab-start-button');
@@ -19,14 +19,14 @@ function initVocab() {
     const nextButton = document.getElementById('vocab-next-button');
     const feedbackEl = document.getElementById('vocab-feedback');
 
-    // --- LOGIQUE DU JEU (Modifiée) ---
+    // --- LOGIQUE DU JEU ---
     let currentWord = null;
-    let filteredList = []; // C'est notre "sessionList" de nouvelles questions
-    let retryList = [];    // NOTRE NOUVELLE LISTE DE RATTRAPAGE
-    let wasRetryQuestion = false; // Pour savoir si la question vient de la retryList
+    let filteredList = []; 
+    let retryList = [];    
+    let wasRetryQuestion = false; 
     let currentMode = '';
 
-    // --- FONCTIONS UTILITAIRES (shuffleArray est nouveau) ---
+    // --- FONCTIONS UTILITAIRES ---
     function normalize(str) {
         if (!str) return '';
         return str.toLowerCase().trim().replace(/\s+/g, ' ');
@@ -41,7 +41,7 @@ function initVocab() {
     }
 
     function loadQuestion() {
-        // --- 1. Réinitialiser l'état (inchangé) ---
+        // --- 1. Réinitialiser l'état ---
         feedbackEl.textContent = '';
         nextButton.style.display = 'none';
         checkButton.style.display = 'none';
@@ -57,33 +57,27 @@ function initVocab() {
         determinerInput.value = ''; determinerInput.disabled = false; determinerInput.className = '';
         nounInput.value = ''; nounInput.disabled = false; nounInput.className = '';
 
-        // --- 2. Choisir un mot (LOGIQUE MODIFIÉE) ---
+        // --- 2. Choisir un mot ---
         wasRetryQuestion = false;
-        // 40% de chance de piocher dans la retryList si elle n'est pas vide
         if (retryList.length > 0 && Math.random() < 0.4) {
-            currentWord = retryList.shift(); // Prend le 1er mot de la liste (le plus ancien)
+            currentWord = retryList.shift(); 
             wasRetryQuestion = true;
         } else {
-            // Sinon, prendre un nouveau mot dans la liste de la session
             if (filteredList.length === 0) {
-                // Si la liste de session est vide, on la recrée
                 const type = filter.value;
                 if (type === 'all') filteredList = [...VOCAB];
                 else filteredList = VOCAB.filter(word => word.type.startsWith(type));
-                
                 shuffleArray(filteredList);
             }
-            currentWord = filteredList.pop(); // Prend le dernier mot de la liste
+            currentWord = filteredList.pop(); 
         }
         
-        // Si on pioche le dernier mot et qu'il est aussi dans la retry list, on l'enlève de la retry list
-        // pour éviter de le demander 2x d'affilée
         const retryIndex = retryList.indexOf(currentWord);
         if (retryIndex > -1) {
             retryList.splice(retryIndex, 1);
         }
 
-        // --- 3. Déterminer le mode de la question (inchangé) ---
+        // --- 3. Déterminer le mode de la question ---
         let selectedMode = modeSelect.value;
         if (selectedMode === 'mixed') {
             currentMode = (Math.random() > 0.5) ? 'de-fr' : 'fr-de';
@@ -91,7 +85,7 @@ function initVocab() {
             currentMode = selectedMode;
         }
 
-        // --- 4. Configurer l'interface (inchangé) ---
+        // --- 4. Configurer l'interface ---
         if (currentMode === 'de-fr') {
             qcmChoices.style.display = 'grid';
             questionEl.textContent = currentWord.german;
@@ -128,7 +122,6 @@ function initVocab() {
             feedbackEl.textContent = "Correct !";
             feedbackEl.className = 'feedback correct';
             button.classList.add('correct');
-            // (La question a déjà été retirée de la retryList par .shift() si elle en venait)
         } else {
             feedbackEl.textContent = `Incorrect. La bonne réponse était : ${currentWord.french}`;
             feedbackEl.className = 'feedback incorrect';
@@ -136,7 +129,6 @@ function initVocab() {
             qcmButtons.forEach(btn => {
                 if (normalize(btn.textContent) === normalize(currentWord.french)) btn.classList.add('correct');
             });
-            // AJOUTÉ : Remettre la question dans la liste de rattrapage
             retryList.push(currentWord);
         }
     }
@@ -195,7 +187,6 @@ function initVocab() {
             }
         }
         
-        // AJOUTÉ : Gérer la retryList
         if (!isFullyCorrect) {
             retryList.push(currentWord);
         }
@@ -213,12 +204,11 @@ function initVocab() {
             alert("Aucun mot ne correspond à ce filtre.");
             return;
         }
-        if (filteredList.length < 4 && modeSelect.value === 'de-fr') {
+        if (filteredList.length < 4 && (modeSelect.value === 'de-fr' || modeSelect.value === 'mixed')) {
             alert("Pas assez de mots dans cette catégorie pour un QCM (il en faut au moins 4). Changez de filtre.");
             return;
         }
         
-        // MODIFIÉ : On mélange la liste de session et on vide la retryList
         shuffleArray(filteredList);
         retryList = [];
 
@@ -227,7 +217,7 @@ function initVocab() {
         loadQuestion();
     });
 
-    // Écouteurs d'événements (inchangés)
+    // Écouteurs d'événements
     checkButton.addEventListener('click', checkInputAction);
     nextButton.addEventListener('click', loadQuestion);
     inputEl.addEventListener('keydown', (e) => {
