@@ -1,6 +1,6 @@
 // verben.js
 
-const VERBS = [
+const STRONG_VERBS = [
   { infinitive: "anfangen", praesens: "er fängt an", praeteritum: "er fing an", perfekt: "er hat angefangen", translation: "commencer" },
   { infinitive: "anhalten", praesens: "er hält an", praeteritum: "er hielt an", perfekt: "er hat angehalten", translation: "s’arrêter" },
   { infinitive: "anziehen", praesens: "er zieht an", praeteritum: "er zog an", perfekt: "er hat angezogen", translation: "mettre (un habit)" },

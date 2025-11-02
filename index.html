@@ -3,59 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz des Verbes Forts Allemands</title>
+    <title>Centre d'Apprentissage Allemand</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div id="app-container">
-        <h1>Quiz des Verbes Forts</h1>
-        <p>Trouvez le verbe allemand et ses formes (3e pers. singulier).</p>
+    <header>
+        <h1>Centre d'Apprentissage Allemand</h1>
+        <nav>
+            <button id="nav-vocab" class="nav-button">Vocabulaire (Ex 1)</button>
+            <button id="nav-conjug" class="nav-button">Conjugaison (Ex 2)</button>
+            <button id="nav-strong-verbs" class="nav-button">Verbes Forts (Ex 3)</button>
+        </nav>
+    </header>
 
-        <div id="quiz-question">
-            <h2 id="verb-translation"></h2>
+    <main>
+        <div id="vocab-exercise" class="exercise-page">
+            <h2>Exercice 1 : Vocabulaire</h2>
+            <div class="app-container" id="vocab-app-container">
+                <div id="vocab-settings">
+                    <div class="form-group-inline">
+                        <label for="vocab-type-filter">Type de mot :</label>
+                        <select id="vocab-type-filter">
+                            <option value="all">Tous</option>
+                            <option value="nom">Noms</option>
+                            <option value="verbe">Verbes</option>
+                            <option value="adjectif">Adjectifs</option>
+                            <option value="adverbe">Adverbes</option>
+                        </select>
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="vocab-mode">Mode de jeu :</label>
+                        <select id="vocab-mode">
+                            <option value="de-fr">Allemand -> Français (QCM)</option>
+                            <option value="fr-de">Français -> Allemand (Saisie)</option>
+                            <option value="mixed">Mélangé (FR <-> DE)</option>
+                        </select>
+                    </div>
+                    <button id="vocab-start-button">Commencer</button>
+                </div>
+
+                <div id="vocab-quiz-area" style="display: none;">
+                    <div id="vocab-question"></div>
+                    
+                    <div id="vocab-qcm-choices">
+                        <button class="qcm-choice"></button>
+                        <button class="qcm-choice"></button>
+                        <button class="qcm-choice"></button>
+                        <button class="qcm-choice"></button>
+                    </div>
+
+                    <div id="vocab-input-area" style="display: none;">
+                        <input type="text" id="vocab-input" autocomplete="off">
+                    </div>
+
+                    <div id="vocab-noun-input-area" style="display: none;">
+                        <input type="text" id="vocab-determiner-input" placeholder="Der/Die/Das" autocomplete="off">
+                        <input type="text" id="vocab-noun-input" placeholder="Nomen" autocomplete="off">
+                    </div>
+                    
+                    <button id="vocab-check-button" style="display: none;">Vérifier</button>
+                    <div id="vocab-feedback"></div>
+                    <button id="vocab-next-button" style="display: none;">Suivant</button>
+                </div>
+            </div>
         </div>
 
-        <form id="quiz-form">
-            <div class="form-group">
-                <label for="infinitive-input">Infinitif</label>
-                <input type="text" id="infinitive-input" autocomplete="off">
-                <span class="feedback" id="infinitive-feedback"></span>
-            </div>
+        <div id="conjug-exercise" class="exercise-page">
+            <h2>Exercice 2 : Conjugaison Simple</h2>
+            <div class="app-container" id="conjug-app-container">
+                <p>Donnez la forme de conjugaison demandée (3e personne du singulier).</p>
+                
+                <div id="conjug-question">
+                    Conjuguez <strong><span id="conjug-verb">...</span></strong> au <strong><span id="conjug-tense">...</span></strong>
+                </div>
 
-            <div class="form-group">
-                <label for="praesens-input">Präsens (er/sie/es...)</label>
-                <input type="text" id="praesens-input" autocomplete="off">
-                <span class="feedback" id="praesens-feedback"></span>
-            </div>
+                <form id="conjug-form">
+                    <div class="form-group">
+                        <label for="conjug-input">Réponse (er/sie/es...) :</label>
+                        <input type="text" id="conjug-input" autocomplete="off">
+                        <span class="feedback" id="conjug-feedback"></span>
+                    </div>
+                    <div id="controls">
+                        <button type="submit" id="conjug-check-button">Vérifier</button>
+                        <button type="button" id="conjug-next-button" style="display: none;">Verbe Suivant</button>
+                    </div>
+                </form>
 
-            <div class="form-group">
-                <label for="praeteritum-input">Präteritum (er/sie/es...)</label>
-                <input type="text" id="praeteritum-input" autocomplete="off">
-                <span class="feedback" id="praeteritum-feedback"></span>
+                <div id="conjug-answer-container" style="display: none;">
+                    <h3>Réponse Correcte :</h3>
+                    <p><strong id="conjug-answer"></strong></p>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="perfekt-input">Perfekt (er/sie/es...)</label>
-                <input type="text" id="perfekt-input" autocomplete="off">
-                <span class="feedback" id="perfekt-feedback"></span>
-            </div>
-
-            <div id="controls">
-                <button type="submit" id="check-button">Vérifier</button>
-                <button type="button" id="next-button" style="display: none;">Verbe Suivant</button>
-            </div>
-        </form>
-
-        <div id="answer-container" style="display: none;">
-            <h3>Réponse Correcte :</h3>
-            <p><strong>Infinitif:</strong> <span id="answer-infinitive"></span></p>
-            <p><strong>Präsens:</strong> <span id="answer-praesens"></span></p>
-            <p><strong>Präteritum:</strong> <span id="answer-praeteritum"></span></p>
-            <p><strong>Perfekt:</strong> <span id="answer-perfekt"></span></p>
         </div>
-    </div>
 
-    <script src="verben.js"></script>
-    <script src="app.js" defer></script>
+        <div id="strong-verb-exercise" class="exercise-page">
+            <div class="app-container" id="strong-verb-app-container">
+                <h2>Exercice 3 : Déclinaisons des Verbes Forts</h2>
+                <p>Trouvez le verbe allemand et ses formes (3e pers. singulier).</p>
+
+                <div id="quiz-question">
+                    <h2 id="verb-translation"></h2>
+                </div>
+
+                <form id="quiz-form">
+                    <div class="form-group">
+                        <label for="infinitive-input">Infinitif</label>
+                        <input type="text" id="infinitive-input" autocomplete="off">
+                        <span class="feedback" id="infinitive-feedback"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="praesens-input">Präsens (er/sie/es...)</label>
+                        <input type="text" id="praesens-input" autocomplete="off">
+                        <span class="feedback" id="praesens-feedback"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="praeteritum-input">Präteritum (er/sie/es...)</label>
+                        <input type="text" id="praeteritum-input" autocomplete="off">
+                        <span class="feedback" id="praeteritum-feedback"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="perfekt-input">Perfekt (er/sie/es...)</label>
+                        <input type="text" id="perfekt-input" autocomplete="off">
+                        <span class="feedback" id="perfekt-feedback"></span>
+                    </div>
+                    <div id="controls">
+                        <button type="submit" id="check-button">Vérifier</button>
+                        <button type="button" id="next-button" style="display: none;">Verbe Suivant</button>
+                    </div>
+                </form>
+
+                <div id="answer-container" style="display: none;">
+                    <h3>Réponse Correcte :</h3>
+                    <p><strong>Infinitif:</strong> <span id="answer-infinitive"></span></p>
+                    <p><strong>Präsens:</strong> <span id="answer-praesens"></span></p>
+                    <p><strong>Präteritum:</strong> <span id="answer-praeteritum"></span></p>
+                    <p><strong>Perfekt:</strong> <span id="answer-perfekt"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="data-strong-verbs.js"></script>
+    <script src="data-vocab.js"></script>
+
+    <script src="main.js"></script>
+    <script src="exercise-strong-verbs.js"></script>
+    <script src="exercise-vocab.js"></script>
+    <script src="exercise-conjug.js"></script>
+
 </body>
 </html>

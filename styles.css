@@ -1,19 +1,76 @@
 /* style.css */
 
+/* --- Styles Généraux de l'Application --- */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #f4f7f6;
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
+    line-height: 1.6;
 }
 
-#app-container {
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0 0 15px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.nav-button {
+    font-size: 1em;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #34495e;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: #4a6583;
+}
+
+.nav-button.active {
+    background-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+main {
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+/* --- Logique des pages d'exercice --- */
+.exercise-page {
+    display: none; /* Caché par défaut */
+    animation: fadeIn 0.5s;
+}
+
+.exercise-page.active {
+    display: block; /* Affiché si actif */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Styles Communs aux Conteneurs de Jeu --- */
+.app-container {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -21,28 +78,13 @@ body {
     width: 100%;
     max-width: 600px;
     border: 1px solid #e0e0e0;
+    margin: 0 auto; /* Centrer le conteneur */
 }
 
-h1 {
+.app-container h2 {
     text-align: center;
     color: #2c3e50;
     margin-top: 0;
-}
-
-#quiz-question {
-    text-align: center;
-    background-color: #ecf0f1;
-    padding: 16px;
-    border-radius: 8px;
-    margin-bottom: 24px;
-}
-
-#verb-translation {
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #3498db;
-    margin: 0;
-    font-style: normal;
 }
 
 .form-group {
@@ -56,6 +98,7 @@ h1 {
     color: #2c3e50;
 }
 
+/* Saisie de texte standard (utilisée dans Ex 2 et 3) */
 .form-group input[type="text"] {
     width: 100%;
     padding: 12px;
@@ -78,6 +121,7 @@ h1 {
     margin-top: 24px;
 }
 
+/* Boutons standards (Vérifier / Suivant) */
 button {
     font-size: 1em;
     font-weight: 600;
@@ -88,57 +132,192 @@ button {
     transition: all 0.2s ease;
 }
 
-#check-button {
-    background-color: #2ecc71;
-    color: white;
+button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
 }
 
-#check-button:hover {
-    background-color: #27ae60;
+/* --- Feedback (commun à tous les jeux) --- */
+.feedback {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.9em;
+}
+.feedback.correct { color: #27ae60; }
+.feedback.incorrect { color: #e74c3c; }
+/* AJOUT : Feedback orange */
+.feedback.warning { color: #f39c12; }
+
+
+input.correct-border {
+    border-color: #27ae60;
+    background-color: #f0fff4;
+}
+input.incorrect-border {
+    border-color: #e74c3c;
+    background-color: #fff6f6;
+}
+/* AJOUT : Bordure orange */
+input.warning-border {
+    border-color: #f39c12;
+    background-color: #fffaf0;
 }
 
-#next-button {
-    background-color: #3498db;
-    color: white;
-}
-
-#next-button:hover {
-    background-color: #2980b9;
-}
-
-#answer-container {
+/* Conteneurs de réponse */
+#answer-container, #conjug-answer-container {
     margin-top: 24px;
     background-color: #f9f9f9;
     border: 1px solid #e0e0e0;
     padding: 16px;
     border-radius: 8px;
 }
+#answer-container h3, #conjug-answer-container h3 { margin-top: 0; color: #2c3e50; }
 
-#answer-container h3 {
-    margin-top: 0;
-    color: #2c3e50;
+
+/* --- Styles Spécifiques à l'Exercice 1 (Vocabulaire) --- */
+#vocab-settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px;
+    background-color: #ecf0f1;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    align-items: center;
 }
-
-.feedback {
-    display: block;
-    margin-top: 6px;
+.form-group-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#vocab-settings label { margin-bottom: 0; font-weight: 600; }
+#vocab-settings select {
+    padding: 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
     font-size: 0.9em;
 }
+#vocab-start-button {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 20px;
+    margin-left: auto;
+}
+#vocab-start-button:hover { background-color: #27ae60; }
 
-.feedback.correct {
-    color: #27ae60;
+#vocab-question {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #3498db;
+    text-align: center;
+    margin: 20px 0;
 }
 
-.feedback.incorrect {
-    color: #e74c3c;
+#vocab-qcm-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+.qcm-choice {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1em;
+    background-color: #fdfdfd;
+    border: 1px solid #bdc3c7;
+    color: #2c3e50;
+    text-align: left;
+}
+.qcm-choice:hover:not(:disabled) { background-color: #ecf0f1; }
+.qcm-choice.correct { background-color: #eaf8f0; border-color: #27ae60; }
+.qcm-choice.incorrect { background-color: #fff6f6; border-color: #e74c3c; }
+
+/* MODIFIÉ : Styles pour les zones de saisie */
+#vocab-input-area, #vocab-noun-input-area {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-input.correct-border {
-    border-color: #27ae60;
-    background-color: #f0fff4;
+/* Saisie simple (verbes, adj...) */
+#vocab-input {
+    flex-grow: 1;
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    box-sizing: border-box;
 }
 
-input.incorrect-border {
-    border-color: #e74c3c;
-    background-color: #fff6f6;
+/* Saisie double (noms) */
+#vocab-determiner-input {
+    flex-shrink: 0;
+    width: 90px;
+    padding: 12px;
+    font-size: 1em;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    text-align: center;
 }
+#vocab-noun-input {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 1em;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+}
+
+
+/* Boutons (Vérifier / Suivant) pour Ex 1 */
+#vocab-check-button {
+    background-color: #2ecc71;
+    color: white;
+    margin-top: 15px;
+    width: 100%;
+}
+#vocab-next-button {
+    display: block;
+    margin: 20px auto 0 auto;
+    background-color: #3498db;
+    color: white;
+}
+#vocab-feedback {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* --- Styles Spécifiques à l'Exercice 2 (Conjugaison) --- */
+#conjug-app-container { max-width: 500px; }
+#conjug-question {
+    text-align: center;
+    font-size: 1.3em;
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+#conjug-check-button { background-color: #2ecc71; color: white; }
+#conjug-next-button { background-color: #3498db; color: white; }
+
+/* --- Styles Spécifiques à l'Exercice 3 (Verbes Forts) --- */
+#strong-verb-exercise #quiz-question {
+    text-align: center;
+    background-color: #ecf0f1;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+#strong-verb-exercise #verb-translation {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #3498db;
+    margin: 0;
+    font-style: normal;
+}
+#strong-verb-exercise #check-button { background-color: #2ecc71; color: white; }
+#strong-verb-exercise #check-button:hover { background-color: #27ae60; }
+#strong-verb-exercise #next-button { background-color: #3498db; color: white; }
+#strong-verb-exercise #next-button:hover { background-color: #2980b9; }
